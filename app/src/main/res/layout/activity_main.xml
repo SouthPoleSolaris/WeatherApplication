@@ -13,114 +13,141 @@
         android:layout_width="394dp"
         android:layout_height="84dp"
         android:layout_margin="16dp"
-        android:hint="Entrez une ville"
+        android:hint="Enter a city"
         android:inputType="text"
         android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Bouton pour déclencher la recherche -->
-
-    <!-- Température ressentie -->
-
-    <!-- Température maximale -->
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024" />
 
     <Button
         android:id="@+id/btnGetWeather"
         android:layout_width="197dp"
         android:layout_height="114dp"
-        android:layout_marginTop="64dp"
-        android:text="Obtenir la météo"
+        android:layout_marginTop="24dp"
+        android:text="Obtain weather"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editCity" />
 
-    <!-- Température minimale -->
-
-    <!-- Pression -->
     <TextView
         android:id="@+id/tvFeelsLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="52dp"
-        android:text="Température ressentie : --°C"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:text="Feels like : --°C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnGetWeather" />
 
     <TextView
-        android:id="@+id/tvGroundLevel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="16dp"
-        android:text="Niveau du sol : -- hPa"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSeaLevel" />
-
-    <TextView
         android:id="@+id/tvTempMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="24dp"
-        android:text="Température min : --°C"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:text="Minimum temperature : --°C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTempMax" />
 
     <TextView
-        android:id="@+id/tvHumidity"
+        android:id="@+id/tvTempMax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
-        android:text="Humidité : -- %"
+        android:text="Maximum temperature : --°C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPressure" />
-
-    <TextView
-        android:id="@+id/tvSeaLevel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="8dp"
-        android:text="Niveau de la mer : -- hPa"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvHumidity" />
+        app:layout_constraintTop_toBottomOf="@id/tvFeelsLike" />
 
     <TextView
         android:id="@+id/tvPressure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="8dp"
-        android:text="Pression : -- hPa"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:text="Pressure: -- hPa"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTempMin" />
 
     <TextView
-        android:id="@+id/tvTempMax"
+        android:id="@+id/tvHumidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="16dp"
-        android:text="Température max : --°C"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:text="Humidity : -- %"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFeelsLike" />
+        app:layout_constraintTop_toBottomOf="@id/tvPressure" />
 
-    <!-- Humidité -->
+    <TextView
+        android:id="@+id/tvGroundLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:text="Ground level : -- hPa"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSeaLevel" />
 
-    <!-- Niveau de la mer -->
+    <TextView
+        android:id="@+id/tvSeaLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:text="Sea level : -- hPa"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHumidity" />
 
-    <!-- Niveau du sol -->
+    <TextView
+        android:id="@+id/sunriseTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sunrise"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.797" />
+
+    <TextView
+        android:id="@+id/sunsetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sunset"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.847" />
+
+    <TextView
+        android:id="@+id/localTimeTextView"
+        android:layout_width="224dp"
+        android:layout_height="27dp"
+        android:text="Local Time"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.911" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

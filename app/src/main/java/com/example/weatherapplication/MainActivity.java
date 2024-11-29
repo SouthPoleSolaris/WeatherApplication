@@ -23,6 +23,17 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.TimeZone;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "WeatherData";
@@ -31,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editCity;
     private Button btnGetWeather;
     private TextView tvFeelsLike, tvTempMax, tvTempMin, tvPressure, tvHumidity, tvSeaLevel, tvGroundLevel;
+    TextView sunriseTextView, sunsetTextView, localTimeTextView;
 
     private RequestQueue queue;
 
@@ -50,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
         tvHumidity = findViewById(R.id.tvHumidity);
         tvSeaLevel = findViewById(R.id.tvSeaLevel);
         tvGroundLevel = findViewById(R.id.tvGroundLevel);
+        sunriseTextView = findViewById(R.id.sunriseTextView);
+        sunsetTextView = findViewById(R.id.sunsetTextView);
+        localTimeTextView = findViewById(R.id.localTimeTextView);
+
 
         // Initialisation de la file d'attente Volley
         queue = Volley.newRequestQueue(this);
@@ -62,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!city.isEmpty()) {
                     fetchWeatherData(city);
                 } else {
-                    Log.e(TAG, "Veuillez entrer une ville valide.");
+                    Log.e(TAG, "Enter a valid city.");
                 }
             }
         });
@@ -76,7 +92,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+
                             JSONObject main = response.getJSONObject("main");
+                            JSONObject sys = response.getJSONObject("sys");
+
                             double feelsLike = main.getDouble("feels_like");
                             double tempMin = main.getDouble("temp_min");
                             double tempMax = main.getDouble("temp_max");
@@ -85,29 +104,50 @@ public class MainActivity extends AppCompatActivity {
 
                             double seaLevel = main.has("sea_level") ? main.getDouble("sea_level") : -1;
                             double groundLevel = main.has("grnd_level") ? main.getDouble("grnd_level") : -1;
+                            long sunriseTimestamp = sys.getLong("sunrise");
+                            long sunsetTimestamp = sys.getLong("sunset");
+
+                            int timezoneOffset = response.getInt("timezone");
+
+                            String sunriseTime = formatTime(sunriseTimestamp, timezoneOffset);
+                            String sunsetTime = formatTime(sunsetTimestamp, timezoneOffset);
+                            String localTime = formatTime(System.currentTimeMillis() / 1000, timezoneOffset);
 
                             // Mise à jour des TextViews
-                            tvFeelsLike.setText("Température ressentie : " + feelsLike + "°C");
-                            tvTempMax.setText("Température max : " + tempMax + "°C");
-                            tvTempMin.setText("Température min : " + tempMin + "°C");
-                            tvPressure.setText("Pression : " + pressure + " hPa");
-                            tvHumidity.setText("Humidité : " + humidity + " %");
-                            tvSeaLevel.setText("Niveau de la mer : " + (seaLevel != -1 ? seaLevel + " hPa" : "N/A"));
-                            tvGroundLevel.setText("Niveau du sol : " + (groundLevel != -1 ? groundLevel + " hPa" : "N/A"));
+                            tvFeelsLike.setText("Feels like : " + feelsLike + "°C");
+                            tvTempMax.setText("Maximum temperature : " + tempMax + "°C");
+                            tvTempMin.setText("Minimum temperature : " + tempMin + "°C");
+                            tvPressure.setText("Pressure : " + pressure + " hPa");
+                            tvHumidity.setText("Humidity : " + humidity + " %");
+                            tvSeaLevel.setText("Sea level : " + (seaLevel != -1 ? seaLevel + " hPa" : "N/A"));
+                            tvGroundLevel.setText("Ground level : " + (groundLevel != -1 ? groundLevel + " hPa" : "N/A"));
+                            sunriseTextView.setText(String.format("Sunrise: %s", sunriseTime));
+                            sunsetTextView.setText(String.format("Sunset: %s", sunsetTime));
+                            localTimeTextView.setText(String.format("Local Time: %s", localTime));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e(TAG, "Erreur JSON : " + e.getMessage());
+                            Log.e(TAG, "Error with JSON : " + e.getMessage());
                         }
                     }
+
+
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "Erreur Volley : " + error.getMessage());
+                        Log.e(TAG, "Error with Volley : " + error.getMessage());
                     }
                 });
 
         queue.add(jsonObjectRequest);
+    }
+
+
+    private String formatTime(long timestamp, int timezoneOffset) {
+        Date date = new Date((timestamp + timezoneOffset) * 1000L);
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return sdf.format(date);
     }
 }
